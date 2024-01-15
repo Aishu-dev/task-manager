@@ -2,18 +2,15 @@
 const formData = require('form-data');
 const Mailgun = require("mailgun.js");
 
-const mailgunApiKey = 'deafd6b7508710ac70bbf39fc795a8a8-7ecaf6b5-91811e06'
-
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
     username: 'api',
-    key: process.env.MAILGUN_API_KEY || mailgunApiKey
+    key: process.env.MAILGUN_API_KEY
 });
-
 
 const sendWelcomeEmail = (email, name) => {
 
-    mg.messages.create('sandbox0f52df06aee649198968a01c3f481e3d.mailgun.org', {
+    mg.messages.create(process.env.MAILGUN_API_KEY, {
         from: 'Excited User <hoxoyi2204@tanlanav.com>',
         to: email,
         subject: 'Thanks for joining in!',
@@ -27,7 +24,7 @@ const sendWelcomeEmail = (email, name) => {
 };
 
 const sendCancelationEmail = (email, name) => {
-    mg.messages.create('sandbox0f52df06aee649198968a01c3f481e3d.mailgun.org', {
+    mg.messages.create(process.env.MAILGUN_API_KEY, {
         from: 'Excited user <hoxoyi2204@tanlanav.com>',
         to: email,
         subject: 'Good Bye!',
